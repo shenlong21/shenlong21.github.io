@@ -8,7 +8,9 @@
   <meta property="og:type" content="website" />
   <meta property="og:title" content="The Jangir Chronicle: Sachin Jangir" />
   <meta property="og:description" content="Full-stack .NET and React engineer. Security engineer on the side." />
-  <meta property="og:image" content="assets/og.png" />
+  <link rel="canonical" href="https://shenlong21.github.io/" />
+  <meta property="og:url" content="https://shenlong21.github.io/" />
+  <meta property="og:image" content="https://shenlong21.github.io/assets/og.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="theme-color" content="#f3ead3" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
@@ -23,8 +25,7 @@
       const fromUrl = new URLSearchParams(location.search).get("edition");
       let saved = null;
       try { saved = localStorage.getItem("edition"); } catch {}
-      const dark = matchMedia("(prefers-color-scheme: dark)").matches;
-      const edition = [fromUrl, saved].find((e) => valid.includes(e)) || (dark ? "night" : "morning");
+      const edition = [fromUrl, saved].find((e) => valid.includes(e)) || "morning";
       document.documentElement.dataset.edition = edition;
     })();
   </script>
