@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-Personal portfolio for Sachin Jangir (full-stack .NET/React engineer with a security-engineering specialty), styled as a vintage broadsheet newspaper: "The Jangir Chronicle". Plain static site — `index.html`, `styles.css`, `script.js`, `avatar.js` — no framework, no build step. External dependencies: Google Fonts, and three.js 0.170 from jsDelivr (via the import map in `index.html`, only for the 3D portrait).
+Personal portfolio for Sachin Jangir (.NET full-stack engineer with a security-engineering specialty), styled as a vintage broadsheet newspaper: "The Jangir Chronicle". Plain static site — `index.html`, `styles.css`, `script.js`, `avatar.js` — no framework, no build step. External dependencies: Google Fonts, and three.js 0.170 from jsDelivr (via the import map in `index.html`, only for the 3D portrait).
 
 ## Running
 
@@ -27,6 +27,7 @@ All copy on the site must come from this brief. It is fact-checked, and its cons
 - Disclose AI-assisted development where the brief says it applies.
 - Don't claim shared or other people's work (Chakra plugins, ClamAV integration, mTLS infra, etc.), and don't feature the GitHub repos listed in §7.
 - No LeetCode numbers and no LeetCode profile link.
+- Don't mention React anywhere on the site (§13): AI writes most of his React code. Position him as a .NET full-stack engineer.
 - Location is Gandhinagar, Gujarat. The site should lead with the full-stack story, with a clearly signposted security section and a visible AI/LLM section (§1).
 
 ## Architecture
