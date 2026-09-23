@@ -1,0 +1,23 @@
+# Browser automation screenshots and logs
+.playwright-mcp/
+
+# Private working notes: phone number, colleagues' names, client names, LinkedIn analytics.
+# Kept locally (CLAUDE.md relies on the brief); remove these lines only if the repo stays private.
+portfolio content brief.md
+review/
+
+# Original 5.8 MB avatar; the site uses the compressed assets/avatar.glb
+assets/sachin.glb
+
+# Claude Code local overrides (shared settings.json is committed)
+.claude/settings.local.json
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*~
+.vscode/
+.idea/
+.zed/

@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en" data-edition="morning">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Jangir Chronicle: Sachin Jangir, full-stack .NET and security engineer</title>
+  <meta name="description" content="Sachin Jangir is a Lead Solution Analyst at Argusoft in Gandhinagar. He builds .NET and React platforms, secures the machines they manage, and builds with LLMs." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="The Jangir Chronicle: Sachin Jangir" />
+  <meta property="og:description" content="Full-stack .NET and React engineer. Security engineer on the side." />
+  <meta property="og:image" content="assets/og.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#f3ead3" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Playfair+Display+SC:wght@400;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script>
+    // Pick the edition before first paint so the page never flashes the wrong one
+    (() => {
+      const valid = ["morning", "security", "night"];
+      const fromUrl = new URLSearchParams(location.search).get("edition");
+      let saved = null;
+      try { saved = localStorage.getItem("edition"); } catch {}
+      const dark = matchMedia("(prefers-color-scheme: dark)").matches;
+      const edition = [fromUrl, saved].find((e) => valid.includes(e)) || (dark ? "night" : "morning");
+      document.documentElement.dataset.edition = edition;
+    })();
+  </script>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <!-- Paper grain overlay -->
+  <svg class="grain" aria-hidden="true">
+    <filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch" /></filter>
+    <rect width="100%" height="100%" filter="url(#noise)" />
+  </svg>
+
+  <div class="press-roll" aria-hidden="true"></div>
+
+  <div class="paper">
+    <!-- ============ MASTHEAD ============ -->
+    <header class="masthead">
+      <p class="tlp" data-for="security"><span class="tlp__tag">TLP:CLEAR</span> This bulletin may be shared without restriction.</p>
+      <div class="masthead__meta">
+        <span>Gandhinagar, Gujarat</span>
+        <time id="dateline"></time>
+        <div class="editions" role="group" aria-label="Edition">
+          <span class="editions__label">Edition</span>
+          <button type="button" data-edition="morning">Morning</button>
+          <button type="button" data-edition="security">Security</button>
+          <button type="button" data-edition="night">Late Night</button>
+        </div>
+      </div>
+      <p class="masthead__title">The Jangir Chronicle</p>
+      <p class="masthead__motto">
+        <span data-for="morning">“All the Code That’s Fit to Ship”</span>
+        <span data-for="security">Security Bulletin: hardening, audits and incident response</span>
+        <span data-for="night">Late Night Edition, in the colours of the DWP theme for Zed</span>
+      </p>
+      <nav class="sections" aria-label="Sections">
+        <a href="#front">Front page</a>
+        <a href="#career">Career</a>
+        <a href="#engineering">Engineering</a>
+        <a href="#security">Security</a>
+        <a href="#ai">AI &amp; LLMs</a>
+        <a href="#workshop">Workshop</a>
+        <a href="#opinion">Opinion</a>
+        <a href="#classifieds">Classifieds</a>
+        <a href="#letters">Letters</a>
+      </nav>
+    </header>
+
+    <main class="edition">
+      <!-- ============ FRONT PAGE ============ -->
+      <section id="front" class="front">
+        <h1 class="headline headline--huge">Full-stack .NET and React engineer. Security engineer on the side.</h1>
+        <p class="deck">Sachin Jangir is a Lead Solution Analyst at Argusoft in Gandhinagar, Gujarat. He builds .NET and React platforms, secures the machines they manage, and builds with LLMs.</p>
+
+        <div class="front__grid">
+          <figure class="photo">
+            <div class="halftone halftone--portrait" id="portrait">
+              <img src="assets/portrait.webp" alt="Sachin Jangir, rendered from his 3D avatar" width="480" height="600" />
+            </div>
+            <figcaption>Sachin Jangir, rendered from his 3D avatar.</figcaption>
+          </figure>
+
+          <article class="lead" data-for="morning night">
+            <h2 class="lead__title">From intern to Lead Solution Analyst, with two promotions on the way</h2>
+            <p><span class="dateline">Gandhinagar.</span> Sachin Jangir joined Argusoft as an intern in January 2022. More than four years and two promotions later, he is a Lead Solution Analyst on Pramaan, the company’s compliance and device-management platform, used by 350+ employees across 320 machines.</p>
+            <p>He designed Pramaan’s original architecture: a CQRS/MediatR backend on .NET Core with a React 18 and TypeScript frontend. He built most of its major features himself, schema to UI, including software allow-listing, a time-boxed OTP system and drift tracking with live output over SignalR.</p>
+            <p>Before Pramaan, he spent 2.5 years on a World Health Organization project serving ~150 users in 5 countries, growing from full-stack developer to its primary maintainer.</p>
+            <a class="button" href="#career">Continue on <span class="js-page-of" data-target="career">page 2</span></a>
+          </article>
+
+          <article class="lead" data-for="security">
+            <h2 class="lead__title">Security engineering across 320 machines and 5 internal audits</h2>
+            <p><span class="dateline">Gandhinagar.</span> Alongside the platform, Sachin does the security engineering behind it. He hardens endpoints across 320 managed machines on three OS tracks (Ubuntu Desktop, Ubuntu Server and Windows 11) with CIS Benchmark pipelines built on Wazuh, ClamAV, Sysmon and SaltStack.</p>
+            <p>He has written 25,000+ lines of compliance policy, including a full CIS Windows 11 benchmark mapped to 7 frameworks. Writing policy up front cut remediation per framework from roughly two weeks to about one. That’s his own estimate, and it varies by framework.</p>
+            <p>He qualified Round 3 of CERT-IN’s VA/PT practical skill test in April 2025, and found 3 critical vulnerabilities across 5 internal security audits.</p>
+            <a class="button" href="#security">Continue on <span class="js-page-of" data-target="security">page 4</span></a>
+          </article>
+
+          <aside class="figures" aria-labelledby="figures-title">
+            <h2 class="figures__title" id="figures-title">Market figures</h2>
+            <table>
+              <tbody>
+                <tr><th scope="row">Employees on Pramaan</th><td>350+</td></tr>
+                <tr><th scope="row">Machines managed</th><td>320</td></tr>
+                <tr><th scope="row">Promotions since 2022</th><td>2</td></tr>
+                <tr><th scope="row">Pull requests reviewed</th><td>400+</td></tr>
+                <tr><th scope="row">Endpoints behind IDOR checks</th><td>~167</td></tr>
+                <tr><th scope="row">Lines of compliance policy</th><td>25,000+</td></tr>
+                <tr><th scope="row">Junior developers mentored</th><td>6</td></tr>
+                <tr><th scope="row">Zed theme downloads</th><td>27,000+</td></tr>
+              </tbody>
+            </table>
+            <p class="figures__source">Sources: Argusoft project history and the Zed marketplace, September 2026.</p>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ============ CAREER ============ -->
+      <section id="career" class="career">
+        <header class="section-head">
+          <span class="section-head__page">Page 2</span>
+          <h2 class="headline">Career</h2>
+          <p class="deck">Four roles at Argusoft Ind Ltd., Gandhinagar, since January 2022.</p>
+        </header>
+
+        <ol class="timeline">
+          <li class="timeline__item">
+            <p class="timeline__when">Jan 2022 – Apr 2022</p>
+            <h3>Intern</h3>
+            <p>Joined Argusoft while finishing a B.E. in Computer Engineering at Government Engineering College, Gandhinagar.</p>
+          </li>
+          <li class="timeline__item">
+            <p class="timeline__when">May 2022 – Aug 2024</p>
+            <h3>Programmer Analyst, WHO project</h3>
+            <p>Full-stack developer on a World Health Organization platform (Angular, .NET, Azure) serving ~150 users in 5 countries. Became its primary maintainer: reviewed 400+ pull requests, set up CI/CD across environments, and resolved 95% of stakeholder inquiries within 24 hours.</p>
+          </li>
+          <li class="timeline__item">
+            <p class="timeline__when">Aug 2024 – Aug 2026</p>
+            <h3>Solution Analyst, Pramaan</h3>
+            <p>Promoted and moved to Pramaan, Argusoft’s internal compliance and device-management platform. Designed its original CQRS architecture and built most of its major features himself.</p>
+            <p class="timeline__note">Employee of the Month, July 2026.</p>
+          </li>
+          <li class="timeline__item timeline__item--now">
+            <p class="timeline__when">Aug 2026 – present</p>
+            <h3>Lead Solution Analyst, Pramaan</h3>
+            <p>Second promotion. Still building features hands-on. He also leads the CI/CD and integration work on a branch shared with several teammates, mentors 6 junior .NET developers (one now ships production code independently), and delegates directly to one dedicated junior developer.</p>
+          </li>
+        </ol>
+      </section>
+
+      <!-- ============ ENGINEERING ============ -->
+      <section id="engineering" class="engineering">
+        <header class="section-head">
+          <span class="section-head__page">Page 3</span>
+          <h2 class="headline">Engineering</h2>
+          <p class="deck">A company-wide platform on .NET Core and React, and a WHO project before it.</p>
+        </header>
+
+        <div class="engineering__grid">
+          <article class="story story--lead">
+            <h3 class="story__title">Pramaan keeps 320 machines in line with security policy</h3>
+            <div class="story__body">
+              <p class="dropcap">Pramaan is Argusoft’s internal Security Configuration Assessment and Mobile Device Management platform. It keeps the company’s machines compliant with CIS benchmarks, and lets the SecOps team manage software installs, watch for compliance drift and act on incidents. It is used by 350+ employees.</p>
+              <p>Sachin designed its original architecture: a CQRS/MediatR backend on .NET Core, a React 18 and TypeScript frontend, and real-time updates over SignalR. He later moved to other work, and has since come back to build on it.</p>
+              <p>His drift-tracking engine, built on EF Core, shows engineers compliance runs across all 320 machines as they happen, with a terminal-style live view built on SignalR and xterm.js. It replaced manual CIS-score audits.</p>
+            </div>
+          </article>
+
+          <aside class="analysis">
+            <h3 class="analysis__title">Why not event sourcing?</h3>
+            <p>For drift tracking, he chose periodic EF Core state diffing over event sourcing. Compliance runs on a schedule, so event-level history wasn’t needed. Idempotent, scheduled automation bundles were cheaper to run and still guaranteed consistent machine state.</p>
+            <p>The simpler pattern was the right one.</p>
+          </aside>
+        </div>
+
+        <h3 class="subhead">Also built on Pramaan</h3>
+        <div class="briefs">
+          <article class="brief">
+            <h4>Software allow-listing</h4>
+            <p>Built end to end: CQRS commands and queries, bulk import, platform summary reports, and OS-aware scripts that run before and after installs.</p>
+          </article>
+          <article class="brief">
+            <h4>Time-boxed OTP</h4>
+            <p>TOTP-style codes, SHA256-hashed and tolerant of clock skew, gate sensitive actions such as pausing VPN hardening or opening a temporary USB-storage window. Endpoint scripts report every success and failure.</p>
+          </article>
+          <article class="brief">
+            <h4>Package inventory</h4>
+            <p>Routes, services, pages and navigation, with OS-aware asset visibility across 6+ platform variants. Now used organization-wide.</p>
+          </article>
+          <article class="brief">
+            <h4>Remote-terminal consent</h4>
+            <p>Windows services can’t reliably show a prompt in the user’s session (Session-0 isolation). He replaced a fragile <code>CreateProcessAsUser</code> call with a WPF dialog launched by a scheduled task, plus a zenity prompt on Linux. No operator can open a remote shell without the user’s approval. One commit in this work was co-written with Claude.</p>
+          </article>
+          <article class="brief">
+            <h4>Scheduled compliance runs</h4>
+            <p>Hangfire-backed recurring runs, with a separate path for offline agents so a disconnected machine fails visibly instead of reporting success.</p>
+          </article>
+          <article class="brief">
+            <h4>Agent deployment pipeline</h4>
+            <p>Leads the integration and Jenkins CI/CD work for the Chakra agent’s self-updating, manifest-based deployment, on a branch shared with several engineers.</p>
+          </article>
+        </div>
+
+        <article class="story story--who">
+          <h3 class="story__title">The WHO project: from developer to primary maintainer</h3>
+          <p>A World Health Organization platform serving ~150 users in 5 countries, with an Angular frontend and a .NET backend on Azure. May 2022 to August 2024.</p>
+          <ul class="facts">
+            <li>Closed IDOR attack surfaces with a centralized authorization framework, enforced across 16 of 18 controllers (~167 endpoints).</li>
+            <li>Migrated the backend from .NET 5 to .NET 8, fixing breaking changes across dependent services.</li>
+            <li>Built centralized exception logging across 5 Azure Functions jobs. It surfaced 5+ critical error sources nobody had seen and cut monitoring effort by 25%.</li>
+            <li>Automated WHO JEE report production with Telerik Document Processing, replacing manual edits to acknowledgements, contents and other front matter.</li>
+            <li>Built a new Angular UI module and the External Expert module’s full lifecycle, including reviewer workflows and a scheduled sync service.</li>
+          </ul>
+        </article>
+
+        <h3 class="subhead">Investigations</h3>
+        <div class="investigations">
+          <article>
+            <h4>A query EF Core couldn’t translate</h4>
+            <p>An in-memory compatibility check inside an EF Core <code>.Where()</code> couldn’t be translated to SQL and crashed at runtime. He materialized the query before filtering, and fixed a second call site with the same failure, not just the one that was reported.</p>
+          </article>
+          <article>
+            <h4>Failures reported as successes</h4>
+            <p>The frontend’s HTTP middleware swallowed error codes, so failed bundle assignments and imports showed as successful, and users were acting on them. Explicit status-code checks fixed it.</p>
+          </article>
+          <article>
+            <h4>Two editors, one counter</h4>
+            <p>A shared code editor’s line numbers, drawn with CSS counters, broke when two editors appeared on one page. Scoping the counter per instance fixed it, and also turned on Bash and PowerShell highlighting, which had never worked.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- ============ SECURITY ============ -->
+      <section id="security" class="security">
+        <header class="section-head">
+          <span class="section-head__page">Page 4</span>
+          <h2 class="headline">Security</h2>
+          <p class="deck">Four years of hardening and auditing systems at Argusoft, on Pramaan and before it on the WHO project.</p>
+        </header>
+
+        <div class="security__grid">
+          <article class="story story--lead">
+            <h3 class="story__title">Hardening every machine the company owns</h3>
+            <div class="story__body">
+              <p class="dropcap">Sachin hardens endpoints for SecOps teams across 320 managed machines on three OS tracks: Ubuntu Desktop, Ubuntu Server and Windows 11. The CIS Benchmark pipelines behind it integrate Wazuh, ClamAV, Sysmon and SaltStack, and every new employee machine at Argusoft is hardened through them.</p>
+              <p>He has written 25,000+ lines of compliance policy, including a full CIS Windows 11 benchmark mapped to 7 frameworks: CIS, CMMC, FedRAMP, GDPR, HIPAA, ISO 27001 and NIST.</p>
+              <p>The old workflow scored machines with Wazuh, then needed hand-written remediation scripts for each failing check. Writing organization-specific YAML policy up front applies to every machine on that OS version. By his own estimate, that cut remediation per framework from roughly two weeks to about one. It varies by framework.</p>
+            </div>
+          </article>
+
+          <aside class="credentials">
+            <h3 class="credentials__title">Credentials</h3>
+            <dl>
+              <dt>CERT-IN VA/PT Practical Skill Test, Round 3</dt>
+              <dd>Qualified April 2025. A hands-on penetration-testing assessment by India’s national CERT, not a multiple-choice exam.</dd>
+              <dt>ISC2 Certified in Cybersecurity</dt>
+              <dd>Issued October 2024.</dd>
+              <dt>Ongoing practice</dt>
+              <dd>HackTheBox coursework (CMS exploitation, Apache Tomcat attacks, Linux privilege escalation, web attacks) and a personal lab for reconnaissance and exploit development.</dd>
+            </dl>
+          </aside>
+        </div>
+
+        <div class="briefs">
+          <article class="brief">
+            <h4>Audit findings</h4>
+            <p>3 critical vulnerabilities across 5 internal audits: broken authorization, privilege escalation, IDOR with weak token encryption, and source code leaking through logs. He worked with the engineering teams on the fixes.</p>
+          </article>
+          <article class="brief">
+            <h4>Supply-chain response</h4>
+            <p>When the keyv/cacheable npm packages were compromised in August 2026, he wrote a 636-line scanner that checks package-manager caches, follows symlinks and sweeps the filesystem for compromised dependencies.</p>
+          </article>
+          <article class="brief">
+            <h4>Wazuh detection tuning</h4>
+            <p>500+ lines of custom rules across 15+ commits, cutting false-positive noise from Docker and rootless runc, snapd, JetBrains tooling, TeamViewer and GNOME. The ruleset mirrors what runs on Argusoft’s Wazuh manager.</p>
+          </article>
+          <article class="brief">
+            <h4>Governed software installs</h4>
+            <p>Pramaan APT Install enforces the allow-list, delegates privileges through scoped sudoers rules instead of broad sudo, reports telemetry to a central server, and puts sensitive actions behind the OTP gate.</p>
+          </article>
+          <article class="brief">
+            <h4>Reading the benchmark critically</h4>
+            <p>A CIS rule that disabled <code>winget</code> was breaking Pramaan’s own Windows installer. He found and fixed it, and wrote the WDAC and Managed Installer design, rollout and break-glass document.</p>
+          </article>
+          <article class="brief">
+            <h4>Certificates and credentials</h4>
+            <p>Built agent-facing inventory endpoints secured with mTLS client-certificate validation on the platform’s existing certificate infrastructure, and a Windows provisioning script that never accepts plaintext passwords.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- ============ AI & LLMS ============ -->
+      <section id="ai" class="ai">
+        <header class="section-head">
+          <span class="section-head__page">Page 5</span>
+          <h2 class="headline">AI &amp; LLMs</h2>
+          <p class="deck">Working LLM features, built with AI tools, and open about it.</p>
+        </header>
+
+        <div class="ai__grid">
+          <article class="story story--lead">
+            <h3 class="story__title">RAG Document Q&amp;A answers only from your documents</h3>
+            <p class="story__stack">ASP.NET Core and .NET 8, the OpenAI SDK, EF Core with SQLite</p>
+            <p class="dropcap">Upload documents into a project, then ask questions or ask for a summary. An LLM writes the answer, but only from what’s in the documents. If they don’t contain the answer, it says so instead of guessing.</p>
+            <ol class="pipeline">
+              <li>Documents are split into ~500-token passages at sentence boundaries, with a 50-token overlap so no idea is lost at a boundary.</li>
+              <li>Each passage is embedded as a vector and stored in SQLite, or in memory for tests.</li>
+              <li>A question is embedded the same way and compared to every passage by cosine similarity.</li>
+              <li>The best passages are packed into the prompt, capped at 3,000 tokens so retrieval can’t overflow the model’s context.</li>
+              <li>If nothing scores above 0.5 similarity, it answers “I couldn’t find relevant information” without calling the LLM at all.</li>
+            </ol>
+            <p><strong>Deliberate trade-offs.</strong> A linear scan instead of a vector database, because a few documents per project don’t need one; the <code>IVectorStore</code> interface lets an ANN index slot in later without touching callers. Thin wrappers over the OpenAI SDK with a configurable base URL let the same code run against OpenAI, Google Gemini and a local Ollama model, and all three are verified end to end.</p>
+            <p><strong>Honest limits.</strong> It hasn’t been load-tested or run on a large corpus, retrieval is O(n) per query, and the SDK wrapper is covered by a smoke test rather than unit tests.</p>
+            <p><strong>How it was built.</strong> With heavy use of Claude Code. He can explain and defend every decision above.</p>
+            <p class="story__links"><a href="https://github.com/shenlong21/rag-document-qa">Source on GitHub</a> <a href="https://github.com/shenlong21/rag-document-qa/blob/HEAD/ARCHITECTURE.md">Architecture notes</a></p>
+          </article>
+
+          <div class="ai__side">
+            <article class="story">
+              <p class="stamp">In progress, not shipped</p>
+              <h3 class="story__title">An agentic security assistant</h3>
+              <p>A prototype LLM tool-calling loop on Ollama with 10 investigative tools backed by Wazuh, a live investigation view streamed over SignalR, and findings saved with EF Core. He wrote its ~3,300 lines of unit tests himself. It lives on an unmerged branch.</p>
+            </article>
+            <article class="story">
+              <h3 class="story__title">How he works</h3>
+              <p>Claude Code and Gemini CLI are part of his daily workflow. Where AI helped write something (the RAG project, one commit in the consent feature, this website) he says so.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ WORKSHOP ============ -->
+      <section id="workshop" class="workshop">
+        <header class="section-head">
+          <span class="section-head__page">Page 6</span>
+          <h2 class="headline">Workshop</h2>
+          <p class="deck">Things he builds on his own time.</p>
+        </header>
+
+        <div class="workshop__grid">
+          <article class="story story--lead">
+            <p class="stamp">Work in progress</p>
+            <h3 class="story__title">Fight Club: a 3D fighting game with netcode that has to agree with itself</h3>
+            <p class="story__stack">C# and .NET on the server, TypeScript and Babylon.js in the browser</p>
+            <p class="dropcap">A browser fighting game in the spirit of Bloody Roar 2. The combat simulation is deterministic fixed-point code, ported line for line from C# on the server to TypeScript on the client, and proven bit-identical by comparing golden-replay hashes.</p>
+            <p>The client predicts its own inputs on a 60 Hz fixed timestep and corrects mispredictions with hard resyncs from server state rather than smoothing them over, because smoothing can hide real bugs. Game state travels in a hand-rolled binary protocol. The browser client uses WebSockets today; the server also speaks WebTransport.</p>
+            <p class="story__links"><a href="https://github.com/shenlong21/fight-club">Source on GitHub</a> <a href="https://github.com/shenlong21/fight-club/blob/HEAD/ARCHITECTURE.md">Architecture notes</a></p>
+          </article>
+
+          <article class="story">
+            <div class="halftone halftone--wide"><img src="assets/dwp-theme.webp" alt="The DWP dark theme in the Zed editor, showing an HTML file" width="1200" height="675" loading="lazy" /></div>
+            <h3 class="story__title">DWP, a theme for the Zed editor</h3>
+            <p>A minimal light and dark theme, published on the official Zed marketplace. 27,000+ downloads. The Late Night edition of this page uses its colours.</p>
+            <p class="story__links"><a href="https://github.com/shenlong21/zed-dwp-theme">Source on GitHub</a> <a href="https://zed.dev/extensions/dwp">Zed marketplace</a></p>
+          </article>
+
+          <article class="story">
+            <div class="halftone halftone--wide"><img src="assets/bartan-turn.webp" alt="Bartan Turn showing today's name in large type and a 3D avatar on a glowing dial" width="1000" height="703" loading="lazy" /></div>
+            <h3 class="story__title">Bartan Turn</h3>
+            <p>Whose turn is it to do the dishes? A zero-backend tracker for a flat of five. Firestore keeps every phone in sync, the rotation catches up on missed days, and an optional three.js dial shows the person on duty as a 3D avatar.</p>
+            <p class="story__links"><a href="https://github.com/shenlong21/bartan-turn">Source on GitHub</a></p>
+          </article>
+
+          <article class="story">
+            <h3 class="story__title">Jerry</h3>
+            <p>A SaltStack command manager he built for himself once endpoint commands outgrew his notes: projects, tasks and reusable command sets on a layered .NET API with EF Core and an Angular UI.</p>
+            <p class="story__links"><a href="https://github.com/shenlong21/Jerry">Source on GitHub</a></p>
+          </article>
+        </div>
+      </section>
+
+      <!-- ============ OPINION ============ -->
+      <section id="opinion" class="opinion">
+        <header class="section-head">
+          <span class="section-head__page">Page 7</span>
+          <h2 class="headline">Opinion</h2>
+          <p class="deck">Four habits that keep showing up in his work.</p>
+        </header>
+        <p class="pullquote">A failure you can see beats a success that isn’t one.</p>
+        <div class="editorials">
+          <article>
+            <h3>Fail loudly</h3>
+            <p>Offline agents now fail visibly instead of reporting success. Failed imports no longer show a success message. The password-expiry policy got a follow-up when it started locking people out. Many of his fixes turn a silent failure into a visible one.</p>
+          </article>
+          <article>
+            <h3>Pick the simpler pattern when it fits</h3>
+            <p>State diffing instead of event sourcing for drift tracking. A linear scan instead of a vector database for RAG, behind an interface so it can grow later. The sophisticated option is only right when the problem needs it.</p>
+          </article>
+          <article>
+            <h3>Read the rulebook critically</h3>
+            <p>A CIS rule that is secure by the book was breaking the company’s own installer. Compliance content is a starting point, not something to apply blindly.</p>
+          </article>
+          <article>
+            <h3>Say how it was built</h3>
+            <p>AI tools are part of how he works, and he discloses where they helped. What matters is understanding why the code is built the way it is and being able to defend it.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- ============ CLASSIFIEDS ============ -->
+      <section id="classifieds" class="classifieds">
+        <header class="section-head">
+          <span class="section-head__page">Page 8</span>
+          <h2 class="headline">Classifieds</h2>
+          <p class="deck">Skills, with an honest note on depth.</p>
+        </header>
+        <div class="ads">
+          <div class="ad ad--wide">
+            <h3>Primary stack, daily use</h3>
+            <p>C#, .NET Core and ASP.NET Core (~4 years). CQRS and MediatR. Entity Framework Core and LINQ. React 18 with TypeScript (2 years). Angular with TypeScript (2 years). SignalR and WebSockets. Docker (3 years). System design, REST API design, SOLID and design patterns.</p>
+          </div>
+          <div class="ad">
+            <h3>Security engineering</h3>
+            <p>VAPT, OWASP Top 10, secure code review. CIS Benchmark and OpenSCAP policy authoring. Wazuh, ClamAV, Sysmon, SaltStack. TOTP/SHA256 authorization design. mTLS client-certificate authentication. Incident response.</p>
+          </div>
+          <div class="ad">
+            <h3>AI and LLMs</h3>
+            <p>Retrieval-augmented generation. LLM APIs: OpenAI, Google Gemini, local Ollama. Agentic tool-calling (prototype). Claude Code and Gemini CLI, daily.</p>
+          </div>
+          <div class="ad">
+            <h3>Working knowledge</h3>
+            <p>Azure: App Services, Functions and CI/CD pipelines. Python for scripting. SQL through EF Core and LINQ. xUnit. gRPC, Hangfire, OpenTelemetry, Serilog. Jenkins.</p>
+          </div>
+          <div class="ad">
+            <h3>Foundations</h3>
+            <p>Data structures and algorithms in C++, with active, ongoing practice.</p>
+          </div>
+          <div class="ad">
+            <h3>Certifications</h3>
+            <p>CERT-IN VA/PT Round 3 (Apr 2025). ISC2 Certified in Cybersecurity (Oct 2024). Microsoft Azure Fundamentals, AZ-900 (Jan 2023).</p>
+          </div>
+          <div class="ad">
+            <h3>Education</h3>
+            <p>B.E. Computer Engineering, Government Engineering College, Gandhinagar, 2018–2022. CGPA 8.61/10.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ LETTERS ============ -->
+      <section id="letters" class="letters">
+        <header class="section-head">
+          <span class="section-head__page">Page 9</span>
+          <h2 class="headline">Letters to the editor</h2>
+          <p class="deck">Write about a role, a project, or anything on these pages.</p>
+        </header>
+        <div class="letters__grid">
+          <p class="letters__email"><a href="mailto:sachinjangir0181@gmail.com">sachinjangir0181@gmail.com</a></p>
+          <ul class="wires">
+            <li><a href="https://github.com/shenlong21">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/sachin-jangir-6854301a0/">LinkedIn</a></li>
+            <li><a href="assets/Sachin%20Jangir%20-%20Dotnet%20Fullstack%20Resume.pdf">Résumé (PDF)</a></li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer class="colophon">
+      <p>Printed and published by Sachin Jangir, Gandhinagar. Set in Playfair Display and Libre Baskerville, masthead in UnifrakturMaguntia. Built with help from Claude Code. © <span id="year"></span></p>
+      <a href="#front">Back to the front page</a>
+    </footer>
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
