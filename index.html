@@ -54,7 +54,7 @@
       <div class="masthead__meta">
         <span>Gandhinagar, Gujarat</span>
         <time id="dateline"></time>
-        <div class="editions" role="group" aria-label="Edition">
+        <div class="editions editions--masthead" role="group" aria-label="Edition">
           <span class="editions__label">Edition</span>
           <button type="button" data-edition="morning">Morning</button>
           <button type="button" data-edition="security">Security</button>
@@ -83,7 +83,7 @@
     <main class="edition">
       <!-- ============ FRONT PAGE ============ -->
       <section id="front" class="front">
-        <h1 class="headline headline--huge">.NET full-stack engineer. Security engineer on the side.</h1>
+        <h1 class="headline headline--huge">.NET <span class="nobreak">full-stack</span> engineer. Security engineer on the side.</h1>
         <p class="deck">Sachin Jangir is a Lead Solution Analyst at Argusoft in Gandhinagar, Gujarat. He builds full-stack .NET platforms, secures the machines they manage, and builds with LLMs.</p>
 
         <div class="front__grid">
@@ -369,13 +369,6 @@
           </article>
 
           <article class="story">
-            <div class="halftone halftone--wide"><img src="assets/bartan-turn.webp" alt="Bartan Turn showing today's name in large type and a 3D avatar on a glowing dial" width="1000" height="703" loading="lazy" /></div>
-            <h3 class="story__title">Bartan Turn</h3>
-            <p>Whose turn is it to do the dishes? A zero-backend tracker for a flat of five. Firestore keeps every phone in sync, the rotation catches up on missed days, and an optional three.js dial shows the person on duty as a 3D avatar.</p>
-            <p class="story__links"><a href="https://github.com/shenlong21/bartan-turn">Source on GitHub</a></p>
-          </article>
-
-          <article class="story">
             <h3 class="story__title">Jerry</h3>
             <p>A SaltStack command manager he built for himself once endpoint commands outgrew his notes: projects, tasks and reusable command sets on a layered .NET API with EF Core and an Angular UI.</p>
             <p class="story__links"><a href="https://github.com/shenlong21/Jerry">Source on GitHub</a></p>
@@ -469,6 +462,16 @@
     </main>
 
     <footer class="colophon">
+      <!-- On phones the edition switcher lives here instead of the masthead -->
+      <div class="editions editions--footer" role="group" aria-labelledby="editions-footer-title">
+        <p class="editions__title" id="editions-footer-title">Read another edition</p>
+        <div class="editions__choices">
+          <button type="button" data-edition="morning">Morning</button>
+          <button type="button" data-edition="security">Security</button>
+          <button type="button" data-edition="night">Late Night</button>
+        </div>
+        <p class="editions__hint">Security puts the security work first. Late Night is the dark version.</p>
+      </div>
       <p>Printed and published by Sachin Jangir, Gandhinagar. Set in Playfair Display and Libre Baskerville, masthead in UnifrakturMaguntia. Built with help from Claude Code. © <span id="year"></span></p>
       <a href="#front">Back to the front page</a>
     </footer>

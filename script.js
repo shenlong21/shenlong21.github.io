@@ -40,27 +40,38 @@ function applyEdition(name) {
   document.dispatchEvent(new CustomEvent("editionchange", { detail: name }));
 }
 
-async function switchEdition(name) {
+async function switchEdition(name, { backToFront = false } = {}) {
   if (name === root.dataset.edition) return;
   try { localStorage.setItem("edition", name); } catch {}
   const url = new URL(location.href);
   url.searchParams.set("edition", name);
   history.replaceState(null, "", url);
 
+  // From the foot of the page, reprint and go back to the front page, where the editions differ
+  const reprint = () => {
+    applyEdition(name);
+    if (!backToFront) return;
+    scrollTo({ top: 0, behavior: "instant" });
+    const headline = document.querySelector("h1");
+    headline.tabIndex = -1;
+    headline.focus({ preventScroll: true });
+  };
+
   const roll = document.querySelector(".press-roll");
-  if (reducedMotion || !roll.animate) return applyEdition(name);
+  if (reducedMotion || !roll.animate) return reprint();
   // Reprint: ink rolls down over the page, the new edition is set, and the ink lifts
   roll.style.animation = "none";
   roll.getAnimations().forEach((a) => a.cancel());
   const easing = "cubic-bezier(.7, 0, .3, 1)";
   await roll.animate([{ transform: "scaleY(0)", transformOrigin: "top" }, { transform: "scaleY(1)", transformOrigin: "top" }],
     { duration: 380, easing, fill: "forwards" }).finished;
-  applyEdition(name);
+  reprint();
   await roll.animate([{ transform: "scaleY(1)", transformOrigin: "bottom" }, { transform: "scaleY(0)", transformOrigin: "bottom" }],
     { duration: 480, easing, fill: "forwards" }).finished;
 }
 
-editionButtons.forEach((b) => b.addEventListener("click", () => switchEdition(b.dataset.edition)));
+editionButtons.forEach((b) => b.addEventListener("click", () =>
+  switchEdition(b.dataset.edition, { backToFront: !!b.closest(".editions--footer") })));
 applyEdition(root.dataset.edition);
 
 // Highlight the current section in the nav

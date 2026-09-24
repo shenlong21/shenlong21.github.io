@@ -28,6 +28,7 @@ All copy on the site must come from this brief. It is fact-checked, and its cons
 - Don't claim shared or other people's work (Chakra plugins, ClamAV integration, mTLS infra, etc.), and don't feature the GitHub repos listed in §7.
 - No LeetCode numbers and no LeetCode profile link.
 - Don't mention React anywhere on the site (§13): AI writes most of his React code. Position him as a .NET full-stack engineer.
+- Don't feature Bartan Turn (§13): too domestic for the positioning. The Workshop shows Fight Club, the DWP theme and Jerry.
 - Location is Gandhinagar, Gujarat. The site should lead with the full-stack story, with a clearly signposted security section and a visible AI/LLM section (§1).
 
 ## Architecture
@@ -37,7 +38,7 @@ The page is one long "edition": a masthead (edition switcher, blackletter title,
 **Editions.** `<html data-edition>` is `morning` (default), `security` or `night`. An inline script in `<head>` picks it before first paint (URL `?edition=`, then `localStorage`, otherwise Morning — deliberately not `prefers-color-scheme`, so every first visit sees the broadsheet). Each edition overrides the tokens in `:root` in `styles.css`. `script.js`'s `editions` map sets the section order per edition: it moves the `<section>`s and nav links in the DOM, renumbers the page labels, and fills `.js-page-of` spans ("Continue on page N"). Content that belongs to only some editions uses `data-for="morning night"` (space-separated). Security leads with the security story and page; night is the morning layout in the DWP Zed theme palette.
 
 `script.js` is coupled to the markup through class names, so keep these in sync when editing HTML:
-- `.editions button[data-edition]` → switch editions (ink "reprint" wipe via `.press-roll`), `aria-pressed` reflects the current one; a `editionchange` event fires on `document`.
+- `.editions button[data-edition]` → switch editions (ink "reprint" wipe via `.press-roll`), `aria-pressed` reflects the current one; a `editionchange` event fires on `document`. There are two switchers: `.editions--masthead` (desktop) and `.editions--footer` (phones, under 640px, with a note on what each edition is). Switching from the footer returns to the top of the page. Because the buttons carry `data-edition`, edition rules in `styles.css` must be scoped to `:root[data-edition=…]`.
 - `.sections a` → gets `.is-active` when the `section[id]` matching its hash is mid-viewport; on mobile the nav scrolls sideways to keep it visible.
 - `.timeline` → JS sets the CSS var `--progress` (0–1), and `.timeline::before` uses `scaleY` to draw the career line.
 - `#dateline` and `#year` are filled in at runtime.
